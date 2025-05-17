@@ -15,3 +15,31 @@ const map = new mapboxgl.Map({
   minZoom: 5, // Minimum allowed zoom
   maxZoom: 18, // Maximum allowed zoom
 });
+
+map.on('load', async () => {
+  map.addSource('boston_route', {
+    type: 'geojson',
+    data: 'bike.geojson',
+    });
+});
+
+
+const bikeLaneStyle = {
+  'line-color': '#32D400',
+  'line-width': 3,
+  'line-opacity': 0.4,
+};
+
+map.addLayer({
+  id: 'bike-lanes',
+  type: 'line',
+  source: 'boston_route',
+  paint: bikeLaneStyle,
+});
+
+map.addLayer({
+  id: 'cambridge-bike-lanes',
+  type: 'line',
+  source: 'cambridge_route',
+  paint: bikeLaneStyle,
+});
